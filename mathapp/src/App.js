@@ -1,7 +1,9 @@
-
+import React from 'react';
+import Game from './Game'
 
 function App() {
-  return null
+  return  (<Game />)
 }
 
 export default App;
+ 
