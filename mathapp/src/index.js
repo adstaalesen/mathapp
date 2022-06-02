@@ -1,6 +1,19 @@
+// Components that we need
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+// A Game that can be played
+// toolbar
+// calculator mode
+// text mode 
+// app component 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
+
+import MenuBar from "./navbar/MenuBar";
+import MenuBarWrapper from "./navbar/MenuBarWrapper";
+import Game from "./game/Game";
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Game />);
+
+        
