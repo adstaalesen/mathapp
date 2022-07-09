@@ -5,15 +5,12 @@
 // calculator mode
 // text mode 
 // app component 
-
+import './index.css';
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-
-import MenuBar from "./navbar/MenuBar";
-import MenuBarWrapper from "./navbar/MenuBarWrapper";
-import Game from "./game/Game";
+import App from "./App"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Game />);
+root.render(<App />);
 
         

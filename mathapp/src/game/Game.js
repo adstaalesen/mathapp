@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-//import GameAnswerField from './GameAnswerField';
-import  GameQuestionBar from './GameQuestionBar'
+import React from 'react';
+import GameQuestionBar from './GameQuestionBar'
 import GameSolved from './GameSolved';
 
-class Game extends Component {
+export default function Game(){
 
-    getQuestion() {
+    function getQuestion() {
 
         var x = Math.floor(Math.random()*10)
         var y = Math.floor(Math.random()*10)
@@ -21,8 +20,8 @@ class Game extends Component {
         return `${x} ${operator} ${y}`
     
     }
-    
-    getSolution(question) {
+
+    function getSolution(question) {
     
         const arr = question.split(' ');    
     
@@ -41,40 +40,40 @@ class Game extends Component {
         
     }
 
-    constructor(props) {
-
-        super(props);
-        this.state = {
-            question: this.getQuestion(),
-            //solution:  this.getSolution(this.question),
-            //answer: '',
-            correctAnswer: false
+    const [game, SetGame] = React.useState({
+        question: getQuestion(),
+        answer: "",
+        gameScore: 0,
+        correctAnswer: false
         }
-        this.handleChange = this.handleChange.bind(this)
+    )
+
+    function handleChange(event) {
+
+        const {name, value} = event.target
+        SetGame(prevGame => {
+            return {
+                ...prevGame,
+                [name]: value,
+                correctAnswer: parseInt(value) === getSolution(game.question)
+            }
+        })
     }
 
-    checkAnswer(answer) {
-        return ( parseInt(answer) == parseInt( this.getSolution(this.state.question ) ) )
-    }
-
-    handleChange = (e) => {
+    return (
+        <>
+        <div class = "game-question-bar">{game.question}</div>
+        <form class-name = "mathform">
+            <input
+                class-name = "answer"
+                type="text"
+                name = "answer"
+                onChange={handleChange} 
+                value = {game.answer}
+            />
+        </form>
+        <div>{ game.correctAnswer ? "Correct answer" : "" }</div>
         
-        if (this.checkAnswer(e.target.value)) {
-            this.setState({ correctAnswer: true });
-        } else {
-            this.setState({ correctAnswer: false });
-        }
-
-    }
-
-    render() {
-            return (
-                <>
-                <GameQuestionBar question = {this.state.question} />
-                <input type="text" name = "answer" onChange={this.handleChange} />
-                <GameSolved correctAnswer = {this.state.correctAnswer} />
-                </>
-            );
-        }
+        </>
+    );
 }
-export default Game;
