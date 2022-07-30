@@ -3,7 +3,7 @@ import React from "react";
 
 export default function GameQuestionBar(props) {
     console.log(`Question is ${props.question}`)
-    return <div class = "game-question-bar">{props.question}</div>;
+    return <div className = "game-question-bar">{props.question}</div>;
    }
 
 

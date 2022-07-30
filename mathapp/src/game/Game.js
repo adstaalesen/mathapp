@@ -1,49 +1,14 @@
 import React from 'react';
-import GameQuestionBar from './GameQuestionBar'
-import GameSolved from './GameSolved';
+import Input from '@mui/material/Input';
+import { getQuestion, getSolution } from './GameLogic';
 
-export default function Game(){
+const ariaLabel = { 'aria-label': 'description' };
 
-    function getQuestion() {
-
-        var x = Math.floor(Math.random()*10)
-        var y = Math.floor(Math.random()*10)
-        var temp = 0;
-    
-        if ((x - y) < 0) {
-            temp = x;
-            x = y;
-            y = temp;
-        }
-    
-        const operator = '+'
-        return `${x} ${operator} ${y}`
-    
-    }
-
-    function getSolution(question) {
-    
-        const arr = question.split(' ');    
-    
-        var x = parseInt(arr[0])
-        var operator = arr[1]
-        var y = parseInt(arr[2])
-    
-        var math_it_up = {
-            '+': function (x, y) { return x + y },
-            '-': function (x, y) { return x - y },
-            '*': function (x, y) { return x * y },
-            '/': function (x, y) { return x / y },
-        }
-    
-        return math_it_up[operator](x, y)
-        
-    }
+export default function Game(props){
 
     const [game, SetGame] = React.useState({
-        question: getQuestion(),
+        question: getQuestion(props.settings),
         answer: "",
-        gameScore: 0,
         correctAnswer: false
         }
     )
@@ -60,20 +25,39 @@ export default function Game(){
         })
     }
 
+    React.useEffect(() => {
+        if (game.correctAnswer) {
+
+            props.setScore(prevScore => prevScore + 1)
+
+            const timer = setTimeout(() => {
+                SetGame({
+                    question: getQuestion(props.settings),
+                    answer: "",
+                    correctAnswer: false
+                    });
+              }, 500);
+            
+            return () => clearTimeout(timer);
+
+            // SetGame({
+            //     question: getQuestion(props.settings),
+            //     answer: "",
+            //     correctAnswer: false
+            //     })
+
+        }
+
+    }, [game.correctAnswer])
+    
     return (
-        <>
-        <div class = "game-question-bar">{game.question}</div>
-        <form class-name = "mathform">
-            <input
-                class-name = "answer"
-                type="text"
-                name = "answer"
-                onChange={handleChange} 
-                value = {game.answer}
-            />
-        </form>
-        <div>{ game.correctAnswer ? "Correct answer" : "" }</div>
-        
-        </>
+        <main>
+            <div key={props.score} className = {game.correctAnswer ? "game-won" : "game"}>
+                <div className = "game-question-bar">{game.question}</div>
+                <form className = "math-form">
+                    <Input placeholder = "?" autoFocus = {true} onChange = {handleChange} name = "answer" inputProps={ariaLabel} />
+                </form>
+            </div>
+        </main>
     );
 }
