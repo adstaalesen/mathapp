@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '@mui/material/Input';
 import { getQuestion, getSolution } from './GameLogic';
+import DifficultyButton from '../components/Sidebar/DifficultyButton';
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -13,9 +14,17 @@ export default function Game(props){
         }
     )
 
+    function controlNumericalInput(event){
+        console.log(event.key)
+        if (!/[0-9-]/.test(event.key)) {
+          event.preventDefault();
+        }
+    }
+
     function handleChange(event) {
 
         const {name, value} = event.target
+
         SetGame(prevGame => {
             return {
                 ...prevGame,
@@ -26,6 +35,7 @@ export default function Game(props){
     }
 
     React.useEffect(() => {
+        
         if (game.correctAnswer) {
 
             props.setScore(prevScore => prevScore + 1)
@@ -39,25 +49,28 @@ export default function Game(props){
               }, 500);
             
             return () => clearTimeout(timer);
-
-            // SetGame({
-            //     question: getQuestion(props.settings),
-            //     answer: "",
-            //     correctAnswer: false
-            //     })
-
         }
 
     }, [game.correctAnswer])
     
     return (
-        <main>
+        <div className='game-container'>
             <div key={props.score} className = {game.correctAnswer ? "game-won" : "game"}>
                 <div className = "game-question-bar">{game.question}</div>
-                <form className = "math-form">
-                    <Input placeholder = "?" autoFocus = {true} onChange = {handleChange} name = "answer" inputProps={ariaLabel} />
+                <form className = "math-form2">
+                    <Input
+                        className ="math-form"
+                        placeholder = "answer"
+                        autoFocus = {true}
+                        onKeyPress = {controlNumericalInput}
+                        onChange = {handleChange}
+                        name = "answer"
+                        inputProps={ariaLabel} 
+                        fullWidth = {true}
+                    />
                 </form>
             </div>
-        </main>
+            <DifficultyButton/>
+        </div>
     );
 }
