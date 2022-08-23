@@ -13,7 +13,7 @@ export default function AppDrawer(props) {
                 <Divider />
                 <Settings settings = {props.settings} toggleSettings = {props.toggleSettings}/>
                 <Divider />
-                <DifficultyButton/>
+                <DifficultyButton incrementDifficulty = {props.incrementDifficulty} difficulty = {props.settings.difficulty}/>
                 <Divider />
             </Drawer>
 

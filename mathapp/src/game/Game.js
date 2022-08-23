@@ -70,7 +70,6 @@ export default function Game(props){
                     />
                 </form>
             </div>
-            <DifficultyButton/>
         </div>
     );
 }

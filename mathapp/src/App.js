@@ -11,7 +11,6 @@ export default function App() {
 
     const [score, setScore] = React.useState(0)
     const [showSidebar, setShowSidebar] = React.useState(false)
-    const [difficulty, setDifficulty] = React.useState(1)
     
     const [settings, setSettings] = React.useState({
         addition: true,
@@ -20,6 +19,7 @@ export default function App() {
         division: false,
         negativeNumber: false,
         darkMode: false,
+        difficulty: 1
     })
 
     function incrementScore() {
@@ -28,7 +28,7 @@ export default function App() {
 
     function getNumberOfActiveSettings() {
 
-        const gameSettings  = SettingsMapping.filter((setting) => setting.category === "game")
+        const gameSettings  = SettingsMapping.filter((setting) => ((setting.category === "game") && (setting.type === "toggle")))
         const activeSettings = gameSettings.filter((setting) => settings[setting.key])
         return activeSettings
 
@@ -46,12 +46,6 @@ export default function App() {
 
     }
 
-    function toggleSidebar() {
-        setShowSidebar( prevShowSidebar => !prevShowSidebar )
-    }
-
-    // Fikse at den må toggles riktig, hvilken setting som togles må væer med å bestemme, samt lengeden på antall activesettings
-
     function toggleSettings(settingBeingToggled) {
        
         if ( assertSettings(settingBeingToggled) ){
@@ -62,17 +56,36 @@ export default function App() {
                 }
             })  
         }
-
     }
 
+    function toggleSidebar() {
+        setShowSidebar( prevShowSidebar => !prevShowSidebar )
+    }
 
+    function incrementDifficulty(increment) {
+
+        setSettings(prevSettings => {
+            
+            const newDifficulty = prevSettings.difficulty + increment
+            
+            if ((newDifficulty <= 10) && (newDifficulty > 0)) {
+                return{
+                    ...prevSettings,
+                    difficulty: (prevSettings.difficulty + increment)
+                }
+            }else {
+                return {
+                    ...prevSettings
+                }
+            }
+        })
+    }
 
     return(
 
         <div className="app-container">
-
             <div className="top-container">
-                {showSidebar && <AppDrawer settings = {settings} toggleSettings = {toggleSettings} toggleSidebar = {toggleSidebar} showSidebar = {showSidebar}/>}
+                {showSidebar && <AppDrawer settings = {settings} toggleSettings = {toggleSettings} toggleSidebar = {toggleSidebar} showSidebar = {showSidebar} incrementDifficulty = {incrementDifficulty}/>}
                 <MathAppBar score = {score} toggleSidebar = {toggleSidebar}/>
             </div>
 
@@ -83,8 +96,6 @@ export default function App() {
             <div className="bottom-container">
                 <BottomModal />
             </div>
-            
-
         </div>
 
     )

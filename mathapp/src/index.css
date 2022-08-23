@@ -85,18 +85,24 @@ body{
 .settings-toggle {
     margin: 1rem;
     display: inline-flex;
-    background-color: bisque;
+    
 }
 
 .settings-header {
-    margin: 1rem;
+    margin: 1rem auto 1rem auto;
 }
 
 .difficulty-button-container {
     width: 10rem;
     display: inline-flex;
     flex-direction: row;
-    justify-content: space-around;
-    background-color: rgb(140, 182, 223);
-    margin: 1rem;
+    justify-content: space-evenly;
+    /* background-color: rgb(140, 182, 223); */
+    margin: 1rem auto 1rem auto;
+}
+
+.score-text {
+    width: 5rem;
+    margin: 0 auto 0 auto;
+    text-align: center;
 }
