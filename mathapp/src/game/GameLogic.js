@@ -7,24 +7,65 @@ function generateRandomNumber(lower, upper) {
 }
 
 
-function defineDifficultyAddition(difficulty) {
-    // Difficulty goes on a scale from 1-10
-    // 1 --> randomNumber in [1,10]
-    // 2 --> randomNumber in [10,30]
-    // 3 --> randomNumber in [10,50]
-    // 4 --> randomNumber in [10,100]
-    // 5 --> randomNumber in [50,150]
-    // 6 --> randomNumber in [150,450]
-    // 7 --> randomNumber in [300,900]
-    // 8 --> randomNumber in [1000,2000]
-    // 9 --> randomNumber in [2500,10000]
-    // 10 --> randomNumber in [10000,20000]
+function getThresholds(difficulty) {
+    
+    function getThresholdsAddition() {
+    if (difficulty === 1 ) {
+        return [1,10]
+    } else if ( difficulty === 2 ) {
+        return [10,30]
+    } else if ( difficulty === 3 ) {
+        return [10,50]
+    } else if ( difficulty === 4 ) {
+        return [30,100]
+    } else if ( difficulty === 5 ) {
+        return [50,150]
+    } else if ( difficulty === 6 ) {
+        return [150,450]
+    } else if ( difficulty === 7 ) {
+        return [300,900]
+    } else if ( difficulty === 8 ) {
+        return [1000,2000]
+    } else if ( difficulty === 9 ) {
+        return [2500,10000]
+    } else if ( difficulty === 10 ) {
+        return [10000,20000]
+    }}
+
+}
+
+
+    
+function getThresholdsAddition(difficulty) {
+    if (difficulty === 1 ) {
+        return [1,10]
+    } else if ( difficulty === 2 ) {
+        return [10,30]
+    } else if ( difficulty === 3 ) {
+        return [10,50]
+    } else if ( difficulty === 4 ) {
+        return [30,100]
+    } else if ( difficulty === 5 ) {
+        return [50,150]
+    } else if ( difficulty === 6 ) {
+        return [150,450]
+    } else if ( difficulty === 7 ) {
+        return [300,900]
+    } else if ( difficulty === 8 ) {
+        return [1000,2000]
+    } else if ( difficulty === 9 ) {
+        return [2500,10000]
+    } else if ( difficulty === 10 ) {
+        return [10000,20000]
+    }
 }
 
 function getAdditionQuestion(settings) {
 
-    const upperTreshold = 10
-    const lowerTreshold = settings.negativeNumber ? -upperTreshold : 1
+    const tresholds = getThresholdsAddition(settings.difficulty)
+
+    const upperTreshold = tresholds[0]
+    const lowerTreshold = settings.negativeNumber ? -tresholds[0] : tresholds[1]
     
     var x = generateRandomNumber(lowerTreshold, upperTreshold)
     var y = generateRandomNumber(lowerTreshold, upperTreshold)

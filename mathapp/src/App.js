@@ -3,7 +3,11 @@ import MathAppBar from "./components/Navbar/MathAppBar";
 import AppDrawer from "./components/Sidebar/AppDrawer";
 import Game from "./game/Game";
 import BottomModal from "./components/Bottombar/BottomModal";
-import { SettingsMapping } from "./components/Models/SettingsMapping";
+import { SettingsMapping } from "./settings/Model/SettingsMapping";
+import { assertSettings } from "./settings/settingsLogic";
+
+import {collection, query, orderBy, onSnapshot, where, getDocs} from "firebase/firestore"
+import {db} from './Firebase'
 
 //https://mui.com/material-ui/react-switch/
 
@@ -11,7 +15,18 @@ export default function App() {
 
     const [score, setScore] = React.useState(0)
     const [showSidebar, setShowSidebar] = React.useState(false)
-    
+
+
+    async function getScores(db) {
+        const scoresCol = collection(db, 'scores');
+        const scoreSnapshot = await getDocs(scoresCol);
+        const scoreList = scoreSnapshot.docs.map(doc => doc.data());
+        console.log(scoreList)
+        return scoreList;
+    }
+  
+    // const a = getScores(db)
+
     const [settings, setSettings] = React.useState({
         addition: true,
         subtraction: false,
@@ -26,29 +41,9 @@ export default function App() {
         setScore(prevScore => (prevScore+1))
     }
 
-    function getNumberOfActiveSettings() {
-
-        const gameSettings  = SettingsMapping.filter((setting) => ((setting.category === "game") && (setting.type === "toggle")))
-        const activeSettings = gameSettings.filter((setting) => settings[setting.key])
-        return activeSettings
-
-    }
-
-    function assertSettings(setting) {
-        const allActiveSettings = getNumberOfActiveSettings()
-        const activeOperations = allActiveSettings.map(setting => setting.key)
-
-        if ((activeOperations.includes(setting)) && (activeOperations.length === 1)) {
-            return false
-        }
-
-        return true
-
-    }
-
     function toggleSettings(settingBeingToggled) {
        
-        if ( assertSettings(settingBeingToggled) ){
+        if ( assertSettings(settingBeingToggled, settings) ){
             setSettings(prevSettings => {
                 return {
                     ...prevSettings,
@@ -84,6 +79,7 @@ export default function App() {
     return(
 
         <div className="app-container">
+            
             <div className="top-container">
                 {showSidebar && <AppDrawer settings = {settings} toggleSettings = {toggleSettings} toggleSidebar = {toggleSidebar} showSidebar = {showSidebar} incrementDifficulty = {incrementDifficulty}/>}
                 <MathAppBar score = {score} toggleSidebar = {toggleSidebar}/>

@@ -17,7 +17,7 @@ export default function MathAppBar(props) {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" component="div">
-                Math app {props.score}
+                Mathify
               </Typography>
             </Toolbar>
           </AppBar>

@@ -57,9 +57,8 @@ export default function Game(props){
         <div className='game-container'>
             <div key={props.score} className = {game.correctAnswer ? "game-won" : "game"}>
                 <div className = "game-question-bar">{game.question}</div>
-                <form className = "math-form2">
+                <form className = "math-form">
                     <Input
-                        className ="math-form"
                         placeholder = "answer"
                         autoFocus = {true}
                         onKeyPress = {controlNumericalInput}
