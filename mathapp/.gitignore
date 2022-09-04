@@ -15,6 +15,7 @@
 firebase.json
 /firebase.json
 /.Firebase.js
+src/Firebase.js
 /.yarn
 /.firebase
 
