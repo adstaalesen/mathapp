@@ -56,6 +56,9 @@ function getThresholdsAddition(difficulty) {
     } else if ( difficulty === 9 ) {
         return [2500,10000]
     } else if ( difficulty === 10 ) {
+        // var a = String(generateRandomNumber(1, 10)) + String(generateRandomNumber(100, 1000)) 
+        // var b = String(generateRandomNumber(1, 10)) + String(generateRandomNumber(100, 1000)) 
+        // return [parseInt(a),parseInt(b)]
         return [10000,20000]
     }
 }

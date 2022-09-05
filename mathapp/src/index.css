@@ -56,7 +56,7 @@ body{
     justify-content: center;
     align-items: center;  
     width: 40%;  
-    min-width: 150px;
+    min-width: 300px;
 }
 
 .game-won {
@@ -66,19 +66,24 @@ body{
     animation: fade 1.5s ease-in-out;
     color: green;
     width: 40%;
-    min-width: 150px;
+    min-width: 300px;
 }
 
 .game-question-bar {
     text-align: left;
-    /* width: 25%; */
     margin: auto;
     padding: 10px;
     padding-left: 15px;
 }
 
 .math-form {
-    /* width: 25%; */
+    padding: 10px;
+    margin: auto;
+}
+
+.math-form-won {
+    animation: fade 1.5s ease-in-out;
+    color: green;
     min-width: 100px;
     padding: 10px;
     margin: auto;
