@@ -79,7 +79,6 @@ export default function App() {
     return(
 
         <div className="app-container">
-            
             <div className="top-container">
                 {showSidebar && <AppDrawer settings = {settings} toggleSettings = {toggleSettings} toggleSidebar = {toggleSidebar} showSidebar = {showSidebar} incrementDifficulty = {incrementDifficulty}/>}
                 <MathAppBar score = {score} toggleSidebar = {toggleSidebar}/>
@@ -88,7 +87,6 @@ export default function App() {
             <div className="middle-container">
                 <Game settings = {settings} score = {score} setScore = {setScore} incrementScore = {incrementScore}/>
             </div>
-
             <div className="bottom-container">
                 <BottomModal />
             </div>
